@@ -1,45 +1,54 @@
 import java.util.*;
 public class ATM {
-	HashMap fortniteAccounts = new HashMap<Integer,Double>();
+	HashMap bankAccounts = new HashMap<Integer,Double>();
 	public ATM () {
 		
 	}
 	
-	public void openAccount (int defaultSkin) {
-		fortniteAccounts.put(defaultSkin, 0.0);
+	public void openAccount (int number) {
+		bankAccounts.put(number, 0.0);
 	}
-	public void openAccount (int wRizz, double breadedUp) {
-		fortniteAccounts.put(wRizz, breadedUp);
-	}
-	
-	public void closeAccount (int accountNumero) {
-		if (checkBalance(accountNumero)<=0)
-			fortniteAccounts.remove(accountNumero);
+	public void openAccount (int number, double value) {
+		
+		bankAccounts.put(number, value);
 	}
 	
-	public double checkBalance(int numero) {
-		if(!fortniteAccounts.containsKey(numero))
+	public void closeAccount (int number) {
+		if (checkBalance(number)<=0)
+			bankAccounts.remove(number);
+	}
+	
+	public double checkBalance(int number) {
+		if(!bankAccounts.containsKey(number))
 			return 0.0;
-		return (double)fortniteAccounts.get(numero);
+		return (double)bankAccounts.get(number);
 	}
 	
-	public boolean depositMoney(int numero, double amount) {
-		if(!fortniteAccounts.containsKey(numero))
+	public boolean depositMoney(int number, double amount) {
+		if(!bankAccounts.containsKey(number))
 			return false;
-		fortniteAccounts.put(numero,(double)fortniteAccounts.get(numero)+amount);
+		amount = (double)bankAccounts.get(number)+amount;
+		amount = amount *100;
+		amount = Math.round(amount);
+		amount = amount/100;
+		bankAccounts.put(number,amount);
 		return true;
 	}
 	
-	public boolean withdrawMoney(int numero, double amount) {
-		if(!fortniteAccounts.containsKey(numero))
+	public boolean withdrawMoney(int number, double amount) {
+		if(!bankAccounts.containsKey(number))
 			return false;
-		if((double)fortniteAccounts.get(numero)<amount)
+		if((double)bankAccounts.get(number)<amount)
 			return false;
-		fortniteAccounts.put(numero,(double)fortniteAccounts.get(numero)-amount);
+		amount = (double)bankAccounts.get(number)-amount;
+		amount = amount *100;
+		amount = Math.round(amount);
+		amount = amount/100;
+		bankAccounts.put(number,amount);
 			return true;
 	}
 	
-	public void printInfo(int numero) {
-		System.out.println("Account number: " +numero+"\nAccount Balance: "+checkBalance(numero));
+	public void printInfo(int number) {
+		System.out.println("Account number: " +number+"\nAccount Balance: "+checkBalance(number));
 	}
 }
